@@ -144,6 +144,8 @@ pub mod server {
 pub mod world {
     pub use pumpkin_plugin_api::{server::Dimension, world::World};
 }
+#[cfg(feature = "mini_message")]
+pub mod mini_message;
 
 pub use pumpkin_plugin_api::{
     Context, Plugin, PluginMetadata, Result as PumpkinResult, register_plugin, scheduler,
