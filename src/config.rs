@@ -20,7 +20,7 @@ impl Format for Toml {
     }
 
     fn deserialize<T: serde::de::DeserializeOwned>(bytes: &[u8]) -> T {
-        toml::from_slice(bytes).unwrap()
+        toml::from_slice(bytes).expect("invalid config")
     }
 }
 
