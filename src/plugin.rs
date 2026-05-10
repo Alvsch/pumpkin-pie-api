@@ -21,13 +21,13 @@ macro_rules! plugin_metadata_from_cargo {
     () => {
         $crate::plugin_metadata_from_cargo!(
             dependencies = Vec::<String>::new(),
-            permissions = Vec::<$crate::PluginPermission>::new(),
+            permissions = Vec::<$crate::plugin::PluginPermission>::new(),
         )
     };
     (dependencies = $dependencies:expr $(,)?) => {
         $crate::plugin_metadata_from_cargo!(
             dependencies = $dependencies,
-            permissions = Vec::<$crate::PluginPermission>::new(),
+            permissions = Vec::<$crate::plugin::PluginPermission>::new(),
         )
     };
     (permissions = $permissions:expr $(,)?) => {
