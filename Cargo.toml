@@ -1,3 +1,7 @@
+[workspace]
+resolver = "2"
+members = ["pumpkin-pie-api-build"]
+
 [package]
 name = "pumpkin-pie-api"
 version = "0.1.0"
