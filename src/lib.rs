@@ -63,8 +63,8 @@ pub mod player {
 }
 pub mod inventory {
     pub use pumpkin_plugin_api::{
-        common::{ClickType, ItemStack},
-        gui::{Gui, GuiType},
+        common::ClickType,
+        gui::{Gui, GuiType, ItemStack},
     };
 }
 pub mod text {
@@ -79,12 +79,12 @@ pub mod block_entity {
 pub mod block {
     // NOTE: we got BlockPosition and BlockPos
     pub use pumpkin_plugin_api::{
-        common::BlockPosition,
-        world::{BlockDirection, BlockFlags, BlockPos, BlockState},
+        common::BlockPos,
+        world::{BlockDirection, BlockFlags, BlockState},
     };
 }
 pub mod entity {
-    pub use pumpkin_plugin_api::{common::EntityPose, entity_types::EntityType, world::Entity};
+    pub use pumpkin_plugin_api::{EntityType, common::EntityPose, world::Entity};
 }
 pub mod permission {
     pub use pumpkin_plugin_api::permission::{
