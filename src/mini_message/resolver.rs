@@ -31,52 +31,53 @@ enum ClickEvent {
 }
 
 impl ResolvedStyle {
-    fn apply_to(&self, component: &TextComponent) {
+    fn apply_to(&self, mut component: TextComponent) -> TextComponent {
         match &self.color {
             Some(Color::Named(c)) => {
-                component.color_named(*c);
+                component = component.color_named(*c);
             }
             Some(Color::Rgb(c)) => {
-                component.color_rgb(*c);
+                component = component.color_rgb(*c);
             }
             None => {}
         }
         if let Some(v) = self.bold {
-            component.bold(v);
+            component = component.bold(v);
         }
         if let Some(v) = self.italic {
-            component.italic(v);
+            component = component.italic(v);
         }
         if let Some(v) = self.underlined {
-            component.underlined(v);
+            component = component.underlined(v);
         }
         if let Some(v) = self.strikethrough {
-            component.strikethrough(v);
+            component = component.strikethrough(v);
         }
         if let Some(v) = self.obfuscated {
-            component.obfuscated(v);
+            component = component.obfuscated(v);
         }
         if let Some(f) = &self.font {
-            component.font(f);
+            component = component.font(f);
         }
         if let Some(s) = &self.insertion {
-            component.insertion(s);
+            component = component.insertion(s);
         }
         match &self.click {
             Some(ClickEvent::OpenUrl(u)) => {
-                component.click_open_url(u);
+                component = component.click_open_url(u);
             }
             Some(ClickEvent::RunCommand(c)) => {
-                component.click_run_command(c);
+                component = component.click_run_command(c);
             }
             Some(ClickEvent::SuggestCommand(c)) => {
-                component.click_suggest_command(c);
+                component = component.click_suggest_command(c);
             }
             Some(ClickEvent::CopyToClipboard(t)) => {
-                component.click_copy_to_clipboard(t);
+                component = component.click_copy_to_clipboard(t);
             }
             None => {}
         }
+        component
     }
 }
 
@@ -159,19 +160,23 @@ fn resolve_tag<'s>(name: &'s str, args: &[&'s str], parent: &ResolvedStyle) -> R
     style
 }
 
-fn resolve_into(parent: &TextComponent, nodes: &[Node<'_>], style: &ResolvedStyle) {
+fn resolve_into(
+    mut parent: TextComponent,
+    nodes: &[Node<'_>],
+    style: &ResolvedStyle,
+) -> TextComponent {
     for node in nodes {
         match node {
             Node::Text(s) => {
                 let child = TextComponent::text(s);
-                style.apply_to(&child);
-                parent.add_child(child);
+                let child = style.apply_to(child);
+                parent = parent.add_child(child);
             }
 
             Node::LiteralOpen => {
                 let child = TextComponent::text("<");
-                style.apply_to(&child);
-                parent.add_child(child);
+                let child = style.apply_to(child);
+                parent = parent.add_child(child);
             }
 
             Node::Tag {
@@ -181,17 +186,17 @@ fn resolve_into(parent: &TextComponent, nodes: &[Node<'_>], style: &ResolvedStyl
             } => {
                 let child_style = resolve_tag(name, args, style);
                 let wrapper = TextComponent::text("");
-                child_style.apply_to(&wrapper);
-                resolve_into(&wrapper, children, &child_style);
-                parent.add_child(wrapper);
+                let wrapper = child_style.apply_to(wrapper);
+                let wrapper = resolve_into(wrapper, children, &child_style);
+                parent = parent.add_child(wrapper);
             }
         }
     }
+    parent
 }
 
 pub fn parse_mini_message(input: &str) -> TextComponent {
     let nodes = Parser::new(input).parse().unwrap_or_default();
     let root = TextComponent::text("");
-    resolve_into(&root, &nodes, &ResolvedStyle::default());
-    root
+    resolve_into(root, &nodes, &ResolvedStyle::default())
 }

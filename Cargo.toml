@@ -16,8 +16,8 @@ config = ["dep:serde"]
 mini_message = ["dep:logos"]
 
 [dependencies]
-pumpkin-plugin-api = { version = "0.1.0", git = "https://github.com/Pumpkin-MC/Pumpkin", package = "pumpkin-plugin-api" }
+pumpkin-plugin-api = { version = "0.2.0", git = "https://github.com/Pumpkin-MC/Pumpkin", package = "pumpkin-plugin-api" }
 
-serde = { version = "1.0.228", features = ["derive"], optional = true }
-toml = { version = "1.1.2", optional = true }
+serde = { version = "1.0.229", features = ["derive"], optional = true }
+toml = { version = "1.1.8", optional = true }
 logos = { version = "0.16.1", optional = true }

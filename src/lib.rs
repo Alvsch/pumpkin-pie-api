@@ -64,7 +64,7 @@ pub mod player {
 pub mod inventory {
     pub use pumpkin_plugin_api::{
         common::ClickType,
-        gui::{Gui, GuiType, ItemStack},
+        gui::{Gui, ItemStack, Screen},
     };
 }
 pub mod text {
@@ -77,7 +77,6 @@ pub mod block_entity {
     pub use pumpkin_plugin_api::block_entity::{BlockEntity, CommandBlockEntity};
 }
 pub mod block {
-    // NOTE: we got BlockPosition and BlockPos
     pub use pumpkin_plugin_api::{
         common::BlockPos,
         world::{BlockDirection, BlockFlags, BlockState},

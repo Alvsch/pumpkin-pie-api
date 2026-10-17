@@ -70,12 +70,6 @@ pub enum PluginPermission {
     /// **Warning:** This is a powerful permission.
     NetworkOutbound,
 
-    /// Allows the plugin to read files from the server's file system outside of its data folder.
-    FsRead,
-
-    /// Allows the plugin to write files to the server's file system outside of its data folder.
-    FsWrite,
-
     /// Allows the plugin to read files within its own data folder (`plugins/<name>`).
     FsReadData,
 
@@ -117,8 +111,6 @@ impl From<PluginPermission> for String {
             }
             PluginPermission::NetworkLoopback => permissions::NETWORK_LOOPBACK,
             PluginPermission::NetworkOutbound => permissions::NETWORK_OUTBOUND,
-            PluginPermission::FsRead => permissions::FS_READ,
-            PluginPermission::FsWrite => permissions::FS_WRITE,
             PluginPermission::FsReadData => permissions::FS_READ_DATA,
             PluginPermission::FsWriteData => permissions::FS_WRITE_DATA,
             PluginPermission::SysEnv => permissions::SYS_ENV,
